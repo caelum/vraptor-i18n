@@ -2,7 +2,7 @@
 
 Uma biblioteca simples, compatível com o jstl fmt:message para i18n nas views.
 
-# instalação
+# instalação e requerimentos
 
 É possível fazer o download do vraptor-i18n.jar do repositório do Maven, ou configurado em qualquer ferramenta compatível:
 
@@ -13,6 +13,8 @@ Uma biblioteca simples, compatível com o jstl fmt:message para i18n nas views.
 			<scope>compile</scope>
 		</dependency>
 
+
+O vraptor-i18n requer servlet api 3.0
 
 # Acessando mensagens com jsp
 
