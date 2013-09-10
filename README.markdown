@@ -52,6 +52,15 @@ E o resultado será:
 
 		O campo nome deve ser preenchido para todo Usuário novo.
 
+# Migrando
+
+As duas regex a seguir ajudam a transformar seus jsps e tagfiles em uma batida só:
+
+		<fmt:message key="([^"]+)"/> ==> ${t['$1']}
+		<fmt:message key="([^"]+)"></fmt:message> ==> ${t['$1']}
+		
+Contribua com uma regex para o caso que usa parâmetros
+
 # Ajuda
 
 Envie perguntas no forum de perguntas e respostas do http://www.guj.com.br
