@@ -1,14 +1,15 @@
 package br.com.caelum.vraptor.i18n;
 
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 import br.com.caelum.vraptor.core.Localization;
 import br.com.caelum.vraptor.ioc.Component;
 
+import com.google.common.collect.ForwardingMap;
+
 @Component
-public class Translator implements Map<String, Message> {
+public class Translator extends ForwardingMap<Class<?>, Object> {
 	
 	private final Localization localization;
 
@@ -17,23 +18,8 @@ public class Translator implements Map<String, Message> {
 	}
 
 	@Override
-	public int size() {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
-	public boolean isEmpty() {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
 	public boolean containsKey(Object key) {
 		return !localization.getMessage(key.toString()).equals("???" + key.toString() + "???");
-	}
-
-	@Override
-	public boolean containsValue(Object value) {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
 	}
 
 	@Override
@@ -45,41 +31,9 @@ public class Translator implements Map<String, Message> {
 		return new Message(message);
 	}
 
-
 	@Override
-	public void clear() {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
+	protected Map<Class<?>, Object> delegate() {
+		return Collections.emptyMap();
 	}
-
-	@Override
-	public Set<String> keySet() {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
-	public Message put(String key, Message value) {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
-	public Message remove(Object key) {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
-	public void putAll(Map<? extends String, ? extends Message> m) {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
-	public Collection<Message> values() {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
-	@Override
-	public Set<java.util.Map.Entry<String, Message>> entrySet() {
-		throw new UnsupportedOperationException("A i18n translator does not support this method");
-	}
-
 
 }
