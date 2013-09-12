@@ -1,6 +1,5 @@
 package br.com.caelum.vraptor.i18n;
 
-import java.util.Collections;
 import java.util.Map;
 
 import br.com.caelum.vraptor.core.Localization;
@@ -31,9 +30,13 @@ public class Translator extends ForwardingMap<Class<?>, Object> {
 		return new Message(message);
 	}
 
+	/**
+	 * All methods from {@link Map} that were not override by {@link Translator} will call {@link #delegate()}
+	 * This way all methods that were not override will throw {@link UnsupportedOperationException}
+	 */
 	@Override
 	protected Map<Class<?>, Object> delegate() {
-		return Collections.emptyMap();
+		throw new UnsupportedOperationException("A i18n translator does not support this method");
 	}
 
 }
