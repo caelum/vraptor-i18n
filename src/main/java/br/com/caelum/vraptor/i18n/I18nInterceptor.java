@@ -14,11 +14,13 @@ import br.com.caelum.vraptor.resource.ResourceMethod;
 public class I18nInterceptor implements Interceptor {
 
 	private final Result result;
-	private final Translator i18n;
+	private final Translator translator;
+	private final LocalizedFormatter localizedFormatter;
 
-	public I18nInterceptor(Result result, Translator i18n) {
+	public I18nInterceptor(Result result, Translator translator, LocalizedFormatter localizedFormatter) {
 		this.result = result;
-		this.i18n = i18n;
+		this.translator = translator;
+		this.localizedFormatter = localizedFormatter;
 	}
 
 	@Override
@@ -29,7 +31,8 @@ public class I18nInterceptor implements Interceptor {
 	@Override
 	public void intercept(InterceptorStack stack, ResourceMethod method,
 			Object instance) throws InterceptionException {
-		result.include("t", i18n);
+		result.include("t", translator);
+		result.include("l", localizedFormatter);
 		stack.next(method, instance);
 	}
 
