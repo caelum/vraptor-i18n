@@ -61,6 +61,28 @@ As duas regex a seguir ajudam a transformar seus jsps e tagfiles em uma batida s
 		
 Contribua com uma regex para o caso que usa parâmetros
 
+# Formatando datas
+
+É possível formatar datas da seguinte forma:
+
+    ${l[minhaData]}
+
+Ou ainda passar formatos suportados pelo DateFormat:
+
+    ${l[minhaData].format('full')}
+    ${l[minhaData].format('short')}
+
+Ou pelo SimpleDateFormat:
+
+    ${l[minhaData].custom('dd/MM/yyyy hh:mm:ss')}
+
+Caso não seja passado nenhum formato personalizado, é usado o formato padrão
+DateFormat.DEFAULT
+
+# Tipos de data suportados
+
+O l suporta além Date, Calendar e as datas do JodaTime.
+
 # Ajuda
 
 Envie perguntas no forum de perguntas e respostas do http://www.guj.com.br
