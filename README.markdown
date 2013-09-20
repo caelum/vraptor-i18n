@@ -76,7 +76,20 @@ Ou ainda passar formatos suportados pelo DateFormat:
 
 Ou pelo SimpleDateFormat:
 
-    ${l[minhaData].custom('dd/MM/yyyy hh:mm:ss')}
+    ${l[minhaData].pattern('dd/MM/yyyy hh:mm:ss')}
+
+
+Se quiser parametrizar a formatação da data no arquivo messages.properties,
+também é possível. Neste caso é só fazer o seguinte:
+
+Configurar a chave desejada no arquivo messages.properties. A chave deve sempre
+começar com "time.formats":
+
+    time.formats.pirate = yyyy.MM.dd G 'at' HH:mm:ss z
+
+Utilizar a formatação na view:
+
+    ${l[minhaData].custom('pirate')}
 
 Caso não seja passado nenhum formato personalizado, é usado o formato padrão
 DateFormat.DEFAULT

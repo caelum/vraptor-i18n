@@ -47,7 +47,7 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_date_using_custom_format() {
 		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", localization.getLocale());
-		assertEquals(formatter.format(data), locator.get(data).custom("dd/MM/yyyy hh:mm:ss").toString());
+		assertEquals(formatter.format(data), locator.get(data).pattern("dd/MM/yyyy hh:mm:ss").toString());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_calendar_using_custom_format(){
 		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", localization.getLocale());
-		assertEquals(formatter.format(cal.getTime()), locator.get(cal).custom("dd/MM/yyyy hh:mm:ss").toString());
+		assertEquals(formatter.format(cal.getTime()), locator.get(cal).pattern("dd/MM/yyyy hh:mm:ss").toString());
 	}
 
 	@Test
@@ -81,12 +81,21 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_joda_time_using_custom_format(){
 		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", localization.getLocale());
-		assertEquals(formatter.format(joda.toDate()), locator.get(joda).custom("dd/MM/yyyy hh:mm:ss").toString());
+		assertEquals(formatter.format(joda.toDate()), locator.get(joda).pattern("dd/MM/yyyy hh:mm:ss").toString());
 	}
 
 	@Test
 	public void should_format_joda_time_using_full_format() {
 		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
 		assertEquals(formatter.format(joda.toDate()), locator.get(joda).format("full").toString());
+	}
+
+	@Test
+	public void should_format_date_using_properties() {
+		String message = "yyyy.MM.dd G 'at' HH:mm:ss z";
+		when(localization.getMessage("time.formats.pirate")).thenReturn(message);
+
+		formatter = new SimpleDateFormat(message);
+		assertEquals(formatter.format(data), locator.get(data).custom("pirate"));
 	}
 }

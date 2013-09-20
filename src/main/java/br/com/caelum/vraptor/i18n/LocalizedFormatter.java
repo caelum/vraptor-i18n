@@ -73,9 +73,14 @@ public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 		return this.toString();
 	}
 
-	public String custom(String pattern){
+	public String pattern(String pattern){
 		this.formatter = new SimpleDateFormat(pattern, localization.getLocale());
 		return this.toString();
+	}
+
+	public String custom(String customFormat) {
+		String pattern = localization.getMessage("time.formats." + customFormat);
+		return pattern(pattern);
 	}
 
 	/**
@@ -86,5 +91,4 @@ public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 	protected Map<Class<?>, Object> delegate() {
 		throw new UnsupportedOperationException("A i18n localized formatter does not support this method");
 	}
-
 }
