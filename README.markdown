@@ -61,6 +61,7 @@ As duas regex a seguir ajudam a transformar seus jsps e tagfiles em uma batida s
 		
 Contribua com uma regex para o caso que usa parâmetros
 
+<<<<<<< HEAD
 # Formatando datas
 
 É possível formatar datas da seguinte forma:
@@ -81,7 +82,13 @@ DateFormat.DEFAULT
 
 # Tipos de data suportados
 
-O l suporta além Date, Calendar e as datas do JodaTime.
+O l suporta além Date, Calendar e as datas do JodaTime. Nada de ficar dando getters loucos de um lado pro outro.
+
+# Release
+
+	mvn release:prepare
+	mvn release:perform
+	open http://oss.sonatype.org
 
 # Ajuda
 
