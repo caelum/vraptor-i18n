@@ -62,7 +62,22 @@ As duas regex a seguir ajudam a transformar seus jsps e tagfiles em uma batida s
 		
 Contribua com uma regex para o caso que usa parâmetros
 
-<<<<<<< HEAD
+# Pluralization/Count
+
+A internacionalização permite que você suporte mensagens com plural ou count de elementos.
+Dadas as mensagens:
+
+	messages_found.zero = No messages found
+	messages_found.one = One message found
+	messages_found.other = {0} messages found
+	
+Você pode invocar:
+
+	${t['messages_found'].count(messages.size())}
+	
+Caso o valor passado para count seja 0, ele usa a mensagem zero. Caso 1, ele chama one, caso diferente desses valores, ele chama other.
+Nos três casos o parâmetro {0} é o número de elementos.
+
 # Formatando datas
 
 É possível formatar datas da seguinte forma:
@@ -97,6 +112,22 @@ DateFormat.DEFAULT
 # Tipos de data suportados
 
 O l suporta além Date, Calendar e as datas do JodaTime. Nada de ficar dando getters loucos de um lado pro outro.
+
+# i18n Filter: usando o vraptor-i18n em páginas que não foram acessadas através do vRaptor
+
+Para usar o i18nfilter basta configurá-lo no web.xml. O nome do filtro é "vraptor-i18n" e você fica livre para configurar
+os padrões de URI. Por exemplo, para suportar as páginas de erro:
+
+	<!-- jamais mudar o filter-name -->
+	<filter-mapping>
+		<filter-name>vraptor-i18n</filter-name>
+		<url-pattern>/WEB-INF/jsp/error/*</url-pattern>
+	</filter-mapping>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/jsp/error/404.jsp</location>
+	</error-page>	
 
 # Release
 

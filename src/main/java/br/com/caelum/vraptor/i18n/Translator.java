@@ -23,11 +23,7 @@ public class Translator extends ForwardingMap<Class<?>, Object> {
 
 	@Override
 	public Message get(Object key) {
-		String message = localization.getMessage(key.toString());
-		if(message.equals("???" + key.toString() + "???")) {
-			return new Message("<span class='i18n_missing_key'>" + key + "</span>");
-		}
-		return new Message(message);
+		return new Message(localization, key.toString());
 	}
 
 	/**

@@ -42,7 +42,7 @@ public class TranslatorTest {
 
 		Translator map = new Translator(localization);
 		when(localization.getMessage("must_be_not_empty")).thenReturn(message);
-		assertEquals("Field name must be not empty for component User", map.get("must_be_not_empty").args("name", "User"));
+		assertEquals("Field name must be not empty for component User", map.get("must_be_not_empty").args("name", "User").toString());
 	}
 
 }
