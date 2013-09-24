@@ -113,6 +113,10 @@ DateFormat.DEFAULT
 
 O l suporta além Date, Calendar e as datas do JodaTime. Nada de ficar dando getters loucos de um lado pro outro.
 
+# Páginas de erro
+
+Se sua página de erro está dentro de qualquer subdiretório de /WEB-INF/, ela automaticamente passará por um filtro que registra tanto t quanto l.
+
 # Release
 
 	mvn release:prepare
