@@ -93,7 +93,7 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_date_using_properties() {
 		String message = "yyyy.MM.dd G 'at' HH:mm:ss z";
-		when(localization.getMessage("time.formats.pirate")).thenReturn(message);
+		when(localization.getMessage("formats.time.pirate")).thenReturn(message);
 
 		formatter = new SimpleDateFormat(message);
 		assertEquals(formatter.format(data), locator.get(data).custom("pirate").toString());
