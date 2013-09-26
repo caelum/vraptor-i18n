@@ -53,7 +53,7 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_date_using_full_format() {
 		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
-		assertEquals(formatter.format(data), locator.get(data).format("full").toString());
+		assertEquals(formatter.format(data), ((LocalizedData)locator.get(data)).format("full").toString());
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_calendar_using_full_format() {
 		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
-		assertEquals(formatter.format(cal.getTime()), locator.get(cal).format("full").toString());
+		assertEquals(formatter.format(cal.getTime()), ((LocalizedData)locator.get(cal)).format("full").toString());
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class LocalizedFormatterTest {
 	@Test
 	public void should_format_joda_time_using_full_format() {
 		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
-		assertEquals(formatter.format(joda.toDate()), locator.get(joda).format("full").toString());
+		assertEquals(formatter.format(joda.toDate()), ((LocalizedData) locator.get(joda)).format("full").toString());
 	}
 
 	@Test
@@ -96,6 +96,6 @@ public class LocalizedFormatterTest {
 		when(localization.getMessage("time.formats.pirate")).thenReturn(message);
 
 		formatter = new SimpleDateFormat(message);
-		assertEquals(formatter.format(data), locator.get(data).custom("pirate"));
+		assertEquals(formatter.format(data), locator.get(data).custom("pirate").toString());
 	}
 }

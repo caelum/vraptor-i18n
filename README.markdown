@@ -98,9 +98,9 @@ Se quiser parametrizar a formatação da data no arquivo messages.properties,
 também é possível. Neste caso é só fazer o seguinte:
 
 Configurar a chave desejada no arquivo messages.properties. A chave deve sempre
-começar com "time.formats":
+começar com "formats.time":
 
-    time.formats.pirate = yyyy.MM.dd G 'at' HH:mm:ss z
+    formats.time.pirate = yyyy.MM.dd G 'at' HH:mm:ss z
 
 Utilizar a formatação na view:
 
@@ -109,9 +109,28 @@ Utilizar a formatação na view:
 Caso não seja passado nenhum formato personalizado, é usado o formato padrão
 DateFormat.DEFAULT
 
-# Tipos de data suportados
+# Números
+
+Da mesma maneira que datas, você pode formatar números com:
+
+	${l[meuNumero]}
+
+Similarmente você pode usar padrões do DecimalFormat:
+
+	${l[meuNumero].pattern("#,##0.00")}
+	
+E dar nomes a seus padrões:
+
+	${l[meuNumero].pattern("percentage")}
+	
+Colocando então no messages.properties:
+
+	formats.number.percentage = ##0.00%
+
+# Tipos de data e números suportados
 
 O l suporta além Date, Calendar e as datas do JodaTime. Nada de ficar dando getters loucos de um lado pro outro.
+Suportamos qualquer tipo de número que implementa Number (incluindo números primitivos, seus wrappers e BigInteger/BigDecimal).
 
 # Páginas de erro
 
