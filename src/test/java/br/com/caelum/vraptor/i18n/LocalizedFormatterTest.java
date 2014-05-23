@@ -20,7 +20,7 @@ public class LocalizedFormatterTest {
 	private MockResourceBundle bundle;
 
 	private Date data;
-	private L locator;
+	private LocalizedFormatter locator;
 	private DateTime joda;
 	private Calendar cal;
 	private DateFormat formatter;
@@ -32,7 +32,7 @@ public class LocalizedFormatterTest {
 		data = joda.toDate();
 		cal = joda.toGregorianCalendar();
 		formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, bundle.getLocale());
-		locator = new L(bundle);
+		locator = new LocalizedFormatter(bundle);
 	}
 
 	@Test

@@ -6,16 +6,23 @@ import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ForwardingMap;
 
-@Named
-public class L extends ForwardingMap<Class<?>, Object> {
+@Named("l")
+public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 
+	@Inject
 	private ResourceBundle bundle;
 
-	public L(ResourceBundle bundle) {
+	@Deprecated
+	public LocalizedFormatter() { }
+
+	@VisibleForTesting
+	public LocalizedFormatter(ResourceBundle bundle) {
 		this.bundle = bundle;
 	}
 
@@ -59,7 +66,7 @@ public class L extends ForwardingMap<Class<?>, Object> {
 
 	/**
 	 * All methods from {@link Map} that were not override by
-	 * {@link L} will call {@link #delegate()} This way all
+	 * {@link LocalizedFormatter} will call {@link #delegate()} This way all
 	 * methods that were not override will throw
 	 * {@link UnsupportedOperationException}
 	 */

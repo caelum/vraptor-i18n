@@ -4,7 +4,7 @@
 
 	<groupId>br.com.caelum.vraptor</groupId>
 	<artifactId>vraptor-i18n</artifactId>
-	<version>1.0.6-SNAPSHOT</version>
+	<version>4.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>vraptor-i18n</name>
@@ -34,21 +34,15 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>2.1.2.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>1.1</version>
 			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>jboss-interceptors-api_1.1_spec</artifactId>
-					<groupId>org.jboss.spec.javax.interceptor</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

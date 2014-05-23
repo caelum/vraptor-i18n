@@ -4,16 +4,23 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ForwardingMap;
 
-@Named
-public class T extends ForwardingMap<Class<?>, Object> {
+@Named("t")
+public class Translator extends ForwardingMap<Class<?>, Object> {
 
+	@Inject
 	private ResourceBundle bundle;
 
-	T(ResourceBundle bundle) {
+	@Deprecated
+	public Translator() { }
+
+	@VisibleForTesting
+	public Translator(ResourceBundle bundle) {
 		this.bundle = bundle;
 	}
 
@@ -33,7 +40,7 @@ public class T extends ForwardingMap<Class<?>, Object> {
 	}
 
 	/**
-	 * All methods from {@link Map} that were not override by {@link T} will call {@link #delegate()}
+	 * All methods from {@link Map} that were not override by {@link Translator} will call {@link #delegate()}
 	 * This way all methods that were not override will throw {@link UnsupportedOperationException}
 	 */
 	@Override
