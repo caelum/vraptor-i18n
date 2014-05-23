@@ -4,33 +4,33 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import br.com.caelum.vraptor.core.Localization;
-import br.com.caelum.vraptor.ioc.Component;
+import javax.inject.Named;
 
 import com.google.common.collect.ForwardingMap;
 
-@Component
-public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
+@Named
+public class L extends ForwardingMap<Class<?>, Object> {
 
-	private final Localization localization;
+	private ResourceBundle bundle;
 
-	public LocalizedFormatter(Localization localization) {
-		this.localization = localization;
+	public L(ResourceBundle bundle) {
+		this.bundle = bundle;
 	}
 
 	@Override
 	public LocalizedInfo get(Object key) {
 		if (key instanceof Calendar) {
 			Date date = ((Calendar) key).getTime();
-			return new LocalizedData(date, localization);
+			return new LocalizedData(date, bundle);
 		} else if (key instanceof Date) {
-			return new LocalizedData((Date) key, localization);
+			return new LocalizedData((Date) key, bundle);
 		} else if (isJodaTime(key)) {
 			Date date = convertJodaTime(key);
-			return new LocalizedData(date, localization);
+			return new LocalizedData(date, bundle);
 		} else if (key instanceof Number) {
-			return new LocalizedNumber((Number) key, localization);
+			return new LocalizedNumber((Number) key, bundle);
 		} else {
 			throw new IllegalArgumentException(
 					"Cannot format given Object as a Date");
@@ -59,7 +59,7 @@ public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 
 	/**
 	 * All methods from {@link Map} that were not override by
-	 * {@link LocalizedFormatter} will call {@link #delegate()} This way all
+	 * {@link L} will call {@link #delegate()} This way all
 	 * methods that were not override will throw
 	 * {@link UnsupportedOperationException}
 	 */
