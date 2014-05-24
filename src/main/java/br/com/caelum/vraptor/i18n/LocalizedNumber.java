@@ -3,39 +3,39 @@ package br.com.caelum.vraptor.i18n;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+
+import br.com.caelum.vraptor.core.Localization;
 
 public class LocalizedNumber implements LocalizedInfo {
 
 	private final Number key;
+	private final Localization localization;
 	private NumberFormat formatter;
-	private ResourceBundle bundle;
 
-	public LocalizedNumber(Number key, ResourceBundle bundle) {
+	public LocalizedNumber(Number key, Localization localization) {
 		this.key = key;
-		this.bundle = bundle;
-		this.formatter = NumberFormat.getNumberInstance(bundle.getLocale());
+		this.localization = localization;
+		this.formatter = NumberFormat.getNumberInstance(localization.getLocale());
 	}
-
+	
 	@Override
 	public String toString() {
-		return formatter.format(key);
+		return formatter.format(key); 
 	}
 
 	public LocalizedNumber pattern(String pattern) {
-		this.formatter = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(bundle.getLocale()));
+		this.formatter = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(localization.getLocale()));
 		return this;
 	}
 
 	public LocalizedNumber custom(String name) {
 		String key = "formats.number." + name;
-		try {
-			String pattern = bundle.getString(key);
-			this.formatter = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(bundle.getLocale()));
-			return this;
-		} catch (MissingResourceException e) {
+		String pattern = localization.getMessage(key);
+		if(pattern == null) {
 			throw new IllegalArgumentException("Custom formatter " + key + " does not exist in your resource bundle.");
 		}
+		this.formatter = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(localization.getLocale()));
+		return this;
 	}
+
 }

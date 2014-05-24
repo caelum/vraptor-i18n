@@ -4,40 +4,33 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import br.com.caelum.vraptor.core.Localization;
+import br.com.caelum.vraptor.ioc.Component;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ForwardingMap;
 
-@Named("l")
+@Component
 public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 
-	@Inject
-	private ResourceBundle bundle;
+	private final Localization localization;
 
-	@Deprecated
-	public LocalizedFormatter() { }
-
-	@VisibleForTesting
-	public LocalizedFormatter(ResourceBundle bundle) {
-		this.bundle = bundle;
+	public LocalizedFormatter(Localization localization) {
+		this.localization = localization;
 	}
 
 	@Override
 	public LocalizedInfo get(Object key) {
 		if (key instanceof Calendar) {
 			Date date = ((Calendar) key).getTime();
-			return new LocalizedData(date, bundle);
+			return new LocalizedData(date, localization);
 		} else if (key instanceof Date) {
-			return new LocalizedData((Date) key, bundle);
+			return new LocalizedData((Date) key, localization);
 		} else if (isJodaTime(key)) {
 			Date date = convertJodaTime(key);
-			return new LocalizedData(date, bundle);
+			return new LocalizedData(date, localization);
 		} else if (key instanceof Number) {
-			return new LocalizedNumber((Number) key, bundle);
+			return new LocalizedNumber((Number) key, localization);
 		} else {
 			throw new IllegalArgumentException(
 					"Cannot format given Object as a Date");

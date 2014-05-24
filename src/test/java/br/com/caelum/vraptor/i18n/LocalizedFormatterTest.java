@@ -1,6 +1,7 @@
 package br.com.caelum.vraptor.i18n;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,13 +13,16 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import br.com.caelum.vraptor.core.Localization;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LocalizedFormatterTest {
 
-	private MockResourceBundle bundle;
-
+	@Mock
+	private Localization localization;
 	private Date data;
 	private LocalizedFormatter locator;
 	private DateTime joda;
@@ -27,12 +31,12 @@ public class LocalizedFormatterTest {
 
 	@Before
 	public void setup(){
-		bundle = new MockResourceBundle(Locale.US);
+		when(localization.getLocale()).thenReturn(Locale.US);
 		joda = new DateTime(2013, 2, 1, 15, 45, 13, 111);
 		data = joda.toDate();
 		cal = joda.toGregorianCalendar();
-		formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, bundle.getLocale());
-		locator = new LocalizedFormatter(bundle);
+		formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, localization.getLocale());
+		locator = new LocalizedFormatter(localization);
 	}
 
 	@Test
@@ -42,13 +46,13 @@ public class LocalizedFormatterTest {
 
 	@Test
 	public void should_format_date_using_custom_format() {
-		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", bundle.getLocale());
+		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", localization.getLocale());
 		assertEquals(formatter.format(data), locator.get(data).pattern("dd/MM/yyyy hh:mm:ss").toString());
 	}
 
 	@Test
 	public void should_format_date_using_full_format() {
-		formatter = DateFormat.getDateInstance(DateFormat.FULL, bundle.getLocale());
+		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
 		assertEquals(formatter.format(data), ((LocalizedData)locator.get(data)).format("full").toString());
 	}
 
@@ -59,13 +63,13 @@ public class LocalizedFormatterTest {
 
 	@Test
 	public void should_format_calendar_using_custom_format(){
-		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", bundle.getLocale());
+		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", localization.getLocale());
 		assertEquals(formatter.format(cal.getTime()), locator.get(cal).pattern("dd/MM/yyyy hh:mm:ss").toString());
 	}
 
 	@Test
 	public void should_format_calendar_using_full_format() {
-		formatter = DateFormat.getDateInstance(DateFormat.FULL, bundle.getLocale());
+		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
 		assertEquals(formatter.format(cal.getTime()), ((LocalizedData)locator.get(cal)).format("full").toString());
 	}
 
@@ -76,20 +80,20 @@ public class LocalizedFormatterTest {
 
 	@Test
 	public void should_format_joda_time_using_custom_format(){
-		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", bundle.getLocale());
+		formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", localization.getLocale());
 		assertEquals(formatter.format(joda.toDate()), locator.get(joda).pattern("dd/MM/yyyy hh:mm:ss").toString());
 	}
 
 	@Test
 	public void should_format_joda_time_using_full_format() {
-		formatter = DateFormat.getDateInstance(DateFormat.FULL, bundle.getLocale());
+		formatter = DateFormat.getDateInstance(DateFormat.FULL, localization.getLocale());
 		assertEquals(formatter.format(joda.toDate()), ((LocalizedData) locator.get(joda)).format("full").toString());
 	}
 
 	@Test
 	public void should_format_date_using_properties() {
 		String message = "yyyy.MM.dd G 'at' HH:mm:ss z";
-		bundle.addWord("formats.time.pirate", message);
+		when(localization.getMessage("formats.time.pirate")).thenReturn(message);
 
 		formatter = new SimpleDateFormat(message);
 		assertEquals(formatter.format(data), locator.get(data).custom("pirate").toString());
