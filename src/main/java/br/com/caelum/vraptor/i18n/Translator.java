@@ -1,29 +1,42 @@
 package br.com.caelum.vraptor.i18n;
 
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
-import br.com.caelum.vraptor.core.Localization;
-import br.com.caelum.vraptor.ioc.Component;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ForwardingMap;
 
-@Component
+@Named("t")
 public class Translator extends ForwardingMap<Class<?>, Object> {
-	
-	private final Localization localization;
 
-	Translator(Localization localization) {
-		this.localization = localization;
+	@Inject
+	private ResourceBundle bundle;
+
+	@Deprecated
+	public Translator() { }
+
+	@VisibleForTesting
+	public Translator(ResourceBundle bundle) {
+		this.bundle = bundle;
 	}
 
 	@Override
 	public boolean containsKey(Object key) {
-		return !localization.getMessage(key.toString()).equals("???" + key.toString() + "???");
+		try {
+			bundle.getString(key.toString());
+			return true;
+		} catch(MissingResourceException e) {
+			return false;
+		}
 	}
 
 	@Override
 	public Message get(Object key) {
-		return new Message(localization, key.toString());
+		return new Message(bundle, key.toString());
 	}
 
 	/**
