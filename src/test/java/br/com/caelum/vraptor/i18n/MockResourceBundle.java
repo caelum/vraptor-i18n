@@ -22,7 +22,11 @@ public class MockResourceBundle extends ResourceBundle {
 
 	@Override
 	protected Object handleGetObject(String key) {
-		return map.get(key);
+		if(map.containsKey(key)) {
+			return map.get(key);
+		} else {
+			return String.format("???%s???", key);
+		}
 	}
 
 	@Override

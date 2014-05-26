@@ -2,7 +2,6 @@ package br.com.caelum.vraptor.i18n;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Message {
@@ -11,7 +10,7 @@ public class Message {
 	private static final String[] ONE = { "1" };
 	private String key;
 	private String[] args;
-	private ResourceBundle bundle;
+	private final ResourceBundle bundle;
 
 	public Message(ResourceBundle bundle, String key) {
 		this.bundle = bundle;
@@ -47,14 +46,14 @@ public class Message {
 	}
 
 	private String getValue() {
-		try {
-			String message = bundle.getString(key.toString());
-			if (this.args == null)
-				return message;
-			return MessageFormat.format(message, (Object[])args);
-		} catch (MissingResourceException e) {
+		String message = bundle.getString(key.toString());
+		if (message.equals("???" + key.toString() + "???")) {
 			return "<span class='i18n_missing_key'>" + key + "</span>";
 		}
+		if (this.args == null) {
+			return message;
+		}
+		return MessageFormat.format(message, (Object[])args);
 	}
 
 	@Override

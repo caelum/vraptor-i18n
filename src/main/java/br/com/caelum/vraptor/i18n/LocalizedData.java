@@ -14,10 +14,10 @@ public class LocalizedData implements LocalizedInfo {
 	private final Locale locale;
 	private final ResourceBundle bundle;
 
-	public LocalizedData(Date parsedKey, ResourceBundle bundle) {
+	public LocalizedData(Date parsedKey, ResourceBundle bundle, Locale locale) {
 		this.key = parsedKey;
 		this.bundle = bundle;
-		this.locale = bundle.getLocale();
+		this.locale = locale;
 		this.formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
 	}
 
