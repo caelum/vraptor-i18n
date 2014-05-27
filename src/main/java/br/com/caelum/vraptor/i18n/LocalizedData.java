@@ -5,20 +5,19 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import br.com.caelum.vraptor.core.Localization;
+import java.util.ResourceBundle;
 
 public class LocalizedData implements LocalizedInfo {
 
 	private DateFormat formatter;
 	private final Date key;
 	private final Locale locale;
-	private final Localization localization;
+	private final ResourceBundle bundle;
 
-	public LocalizedData(Date parsedKey, Localization localization) {
+	public LocalizedData(Date parsedKey, ResourceBundle bundle, Locale locale) {
 		this.key = parsedKey;
-		this.localization = localization;
-		this.locale = localization.getLocale();
+		this.bundle = bundle;
+		this.locale = locale;
 		this.formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
 	}
 
@@ -44,7 +43,7 @@ public class LocalizedData implements LocalizedInfo {
 	}
 
 	public LocalizedData custom(String customFormat) {
-		String pattern = localization.getMessage("formats.time." + customFormat);
+		String pattern = bundle.getString("formats.time." + customFormat);
 		return pattern(pattern);
 	}
 }

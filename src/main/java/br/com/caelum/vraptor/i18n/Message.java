@@ -1,22 +1,19 @@
 package br.com.caelum.vraptor.i18n;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import br.com.caelum.vraptor.core.Localization;
+import java.util.ResourceBundle;
 
 public class Message {
 
 	private static final String[] ZERO = { "0" };
 	private static final String[] ONE = { "1" };
 	private String key;
-	private final Localization localization;
 	private String[] args;
+	private final ResourceBundle bundle;
 
-	public Message(Localization localization, String key) {
-		this.localization = localization;
+	public Message(ResourceBundle bundle, String key) {
+		this.bundle = bundle;
 		this.key = key;
 	}
 
@@ -49,13 +46,14 @@ public class Message {
 	}
 
 	private String getValue() {
-		String message = localization.getMessage(key.toString());
+		String message = bundle.getString(key.toString());
 		if (message.equals("???" + key.toString() + "???")) {
 			return "<span class='i18n_missing_key'>" + key + "</span>";
 		}
-		if (this.args == null)
+		if (this.args == null) {
 			return message;
-		return MessageFormat.format(message, args);
+		}
+		return MessageFormat.format(message, (Object[])args);
 	}
 
 	@Override

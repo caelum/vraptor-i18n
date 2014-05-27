@@ -3,34 +3,48 @@ package br.com.caelum.vraptor.i18n;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import br.com.caelum.vraptor.core.Localization;
-import br.com.caelum.vraptor.ioc.Component;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.google.common.collect.ForwardingMap;
 
-@Component
+@Named("l")
+@RequestScoped
 public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 
-	private final Localization localization;
+	private final ResourceBundle bundle;
+	private final Locale locale;
 
-	public LocalizedFormatter(Localization localization) {
-		this.localization = localization;
+	/**
+	 * @deprecated CDI eyes only
+	 */
+	public LocalizedFormatter() {
+		this(null, null);
+	}
+
+	@Inject
+	public LocalizedFormatter(ResourceBundle bundle, Locale locale) {
+		this.bundle = bundle;
+		this.locale = locale;
 	}
 
 	@Override
 	public LocalizedInfo get(Object key) {
 		if (key instanceof Calendar) {
 			Date date = ((Calendar) key).getTime();
-			return new LocalizedData(date, localization);
+			return new LocalizedData(date, bundle, locale);
 		} else if (key instanceof Date) {
-			return new LocalizedData((Date) key, localization);
+			return new LocalizedData((Date) key, bundle, locale);
 		} else if (isJodaTime(key)) {
 			Date date = convertJodaTime(key);
-			return new LocalizedData(date, localization);
+			return new LocalizedData(date, bundle, locale);
 		} else if (key instanceof Number) {
-			return new LocalizedNumber((Number) key, localization);
+			return new LocalizedNumber((Number) key, bundle, locale);
 		} else {
 			throw new IllegalArgumentException(
 					"Cannot format given Object as a Date");
