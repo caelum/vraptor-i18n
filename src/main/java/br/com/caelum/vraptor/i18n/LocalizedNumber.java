@@ -18,7 +18,7 @@ public class LocalizedNumber implements LocalizedInfo {
 		this.key = key;
 		this.bundle = bundle;
 		this.locale = locale;
-		this.formatter = NumberFormat.getNumberInstance(bundle.getLocale());
+		this.formatter = NumberFormat.getNumberInstance(locale);
 	}
 
 	@Override
