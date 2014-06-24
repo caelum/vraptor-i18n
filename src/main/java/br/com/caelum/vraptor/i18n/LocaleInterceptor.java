@@ -8,28 +8,44 @@ import javax.servlet.jsp.jstl.core.Config;
 
 import br.com.caelum.vraptor.BeforeCall;
 import br.com.caelum.vraptor.Intercepts;
+import br.com.caelum.vraptor.environment.Environment;
+
+/**
+ * Interceptor to locale configuration 
+ * @author Denilson Telaroli
+ */
 
 @Intercepts
 public class LocaleInterceptor {
 
+	private static final String DEFAULT_DISABLED = "false";
+	private static final String DEFAULT_ENABLED = "true";
+	private static final String ENABLED = DEFAULT_ENABLED;
 	private final HttpServletRequest request;
+	private final Environment env;
 
 	/** 
 	 * @deprecated CDI eyes only
 	 */
 	public LocaleInterceptor() {
-		this(null);
+		this(null, null);
 	}
 
 	@Inject
-	public LocaleInterceptor(HttpServletRequest request) {
+	public LocaleInterceptor(HttpServletRequest request, Environment env) {
 		this.request = request;
+		this.env = env;
 	}
 	
 	@BeforeCall
 	public void setLocale() {
-		setLocaleFromBrowser();
-		setLocaleFromRequestParameter();
+		if(env.get("locale.enableFromBrowser", DEFAULT_DISABLED).equals(ENABLED)) {
+			setLocaleFromBrowser();
+		}
+		
+		if(env.get("locale.enableFromParameter", DEFAULT_ENABLED).equals(ENABLED)) {
+			setLocaleFromRequestParameter();
+		}
 	}
 	
 	private void setLocaleFromBrowser() {

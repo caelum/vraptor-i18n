@@ -3,6 +3,7 @@ package br.com.caelum.vraptor.i18n;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -19,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.http.MutableRequest;
 
 @SuppressWarnings("deprecation") 
@@ -27,6 +29,7 @@ public class LocaleInterceptorTest {
 	LocaleInterceptor interceptor;
 	@Mock MutableRequest request;
 	HttpSession session;
+	@Mock Environment env;
 	
 	class MockHttpSession implements HttpSession {
 		private HashMap<String, Object> params = new HashMap<>();
@@ -63,8 +66,9 @@ public class LocaleInterceptorTest {
 
 		session = new MockHttpSession();
 		when(request.getSession()).thenReturn(session);
-		interceptor = new LocaleInterceptor(request);
 		when(request.getLocale()).thenReturn(new Locale("pt"));
+		when(env.get(anyString(), anyString())).thenReturn("true");
+		interceptor = new LocaleInterceptor(request, env);
 	}
 
 	@Test
@@ -148,6 +152,28 @@ public class LocaleInterceptorTest {
 		assertEquals("BR", locale.getCountry());
 	}
 
+	@Test
+	public void shouldDisableFeatureSetFromBrowserByEnv() {
+		when(env.get("locale.enableFromBrowser", "false")).thenReturn("false");
+		when(env.get("locale.enableFromParameter", "false")).thenReturn("false");
+		assertNull(getLocaleFromSession());
+		
+		interceptor.setLocale();
+		assertNull(getLocaleFromSession());
+	}
+	
+	@Test
+	public void shouldDisableFeatureSetFromParameterByEnv() {
+		when(env.get("locale.enableFromBrowser", "false")).thenReturn("false");
+		when(env.get("locale.enableFromParameter", "true")).thenReturn("false");
+		when(request.getParameter("_locale")).thenReturn("pt");
+		
+		assertNull(getLocaleFromSession());
+		
+		interceptor.setLocale();
+		assertNull(getLocaleFromSession());
+	}
+	
 	private Locale getLocaleFromSession() {
 		return (Locale) Config.get(session, Config.FMT_LOCALE);
 	}
