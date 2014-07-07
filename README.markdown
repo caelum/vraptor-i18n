@@ -136,6 +136,10 @@ Suportamos qualquer tipo de número que implementa Number (incluindo números pr
 
 Se sua página de erro está dentro de qualquer subdiretório de /WEB-INF/, ela automaticamente passará por um filtro que registra tanto t quanto l.
 
+# Alterando o locale padrão
+
+Para que o plugin mude o idioma configurado para a sessão do usuário, basta adicionar no request o parâmetro _locale. Por exemplo, http://seudominio.com/seupath?_locale=pt_BR configurará o locale para Português do Brasil. O parâmetro pode ser enviado via POST também.
+
 # Release
 
 	mvn release:prepare
