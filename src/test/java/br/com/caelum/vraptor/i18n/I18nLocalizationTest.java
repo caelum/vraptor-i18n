@@ -2,7 +2,6 @@ package br.com.caelum.vraptor.i18n;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -19,14 +18,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.http.MutableRequest;
 
 @SuppressWarnings("deprecation") 
 public class I18nLocalizationTest {
 
 	@Mock MutableRequest request;
-	@Mock Environment env;
 	@Mock ServletContext context;
 	HttpSession session;
 	I18nLocalization i18n;
@@ -69,8 +66,7 @@ public class I18nLocalizationTest {
 		defaultLocale = Locale.getDefault();
 		when(request.getSession()).thenReturn(session);
 		when(request.getServletContext()).thenReturn(context);
-		when(env.get(anyString(), anyString())).thenReturn("true");
-		i18n = new I18nLocalization(request, env);
+		i18n = new I18nLocalization(request);
 	}
 
 	private void assertDefaultLocale() {
@@ -104,17 +100,6 @@ public class I18nLocalizationTest {
 		Locale locale = getLocale();
 		assertNotNull(locale);
 		assertEquals("pt", locale.getLanguage());
-	}
-	
-	@Test
-	public void shouldDisableFeatureSetFromParameterByEnv() {
-		when(env.get("locale.enableFromParameter", "true")).thenReturn("false");
-		when(request.getParameter("_locale")).thenReturn("pt");
-		
-		assertDefaultLocale();
-		
-		i18n.getBundle();
-		assertDefaultLocale();
 	}
 	
 	private Locale getLocale() {
