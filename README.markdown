@@ -140,6 +140,41 @@ Se sua página de erro está dentro de qualquer subdiretório de /WEB-INF/, ela 
 
 Para que o plugin mude o idioma configurado para a sessão do usuário, basta adicionar no request o parâmetro _locale. Por exemplo, http://seudominio.com/seupath?_locale=pt_BR configurará o locale para Português do Brasil. O parâmetro pode ser enviado via POST também.
 
+# URL com locale
+
+Por padrão o plugin cria mais uma rota para as rotas padrão adicionando o locale padrão.
+O locale pode ser informado na url com traço ou sublinha desconsiderando maiúsculo e minúsculo.
+
+Exemplo de rotas que respondem ao mesmo controller e action: 
+```
+/controller/action
+/en-us/controller/action
+/en_US/controller/action
+``` 
+
+# Tradução de rotas
+
+As rotas podem ser traduzidas adicionando um arquivo de propriedades para o locale com o nome routes_{locale}.properties.
+Para traduzir adicione as rotas com suas traduções no arquivo no formato chave/valor.
+
+Exemplo de tradução para português brasileiro do locale padrão em inglês:
+
+*Conteúdo do arquivo routes_pt_BR.properties*:
+
+```
+/controller/action/{param} = /controlador/acao/{param}
+```
+
+*Rotas que respondem a este controller/action*:
+
+```
+/controller/action/{param}
+/en-us/controller/action/{param}
+/en_US/controller/action/{param}
+/pt-br/controlador/acao/{param}
+/pt_BR/controlador/acao/{param}
+``` 
+
 # Release
 
 	mvn release:prepare
