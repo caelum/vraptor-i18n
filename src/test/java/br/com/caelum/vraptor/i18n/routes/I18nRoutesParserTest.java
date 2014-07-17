@@ -1,10 +1,15 @@
 package br.com.caelum.vraptor.i18n.routes;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +43,9 @@ public class I18nRoutesParserTest {
 	private @Mock EncodingHandler encodingHandler;
 
 	private I18nRoutesParser parser;
+	private @Mock RoutesResources routesResource;
+	private List<ResourceBundle> bundles;
+	private @Mock ResourceBundle bundle;
 
 	@Before
 	public void setup() {
@@ -54,8 +62,13 @@ public class I18nRoutesParserTest {
 				return new DefaultRouteBuilder(proxifier, typeFinder, converters, nameProvider, new JavaEvaluator(), (String) invocation.getArguments()[0],encodingHandler);
 			}
 		});
+		
+		bundles = Arrays.asList(ResourceBundle.getBundle("routes", new Locale("pt", "BR")));
+		when(routesResource.getAvailableBundles()).thenReturn(bundles);
 
-		parser = new I18nRoutesParser(router);
+		parser = new I18nRoutesParser(router, routesResource);
+		
+		Locale.setDefault(new Locale("en", "US"));
 	}
 	
 	@Controller
@@ -88,8 +101,8 @@ public class I18nRoutesParserTest {
 	@Test
 	public void shouldAddLocalePrefixAnnotatedControllerMethodWithoutPath() {
 		List<Route> routes = parser.rulesFor(new DefaultBeanClass(AnnotatedController.class));
-		Route route = getRouteMatching(routes, "/prefix/withoutPath");
-		assertTrue(route.canHandle("/pt_BR/prefix/withoutPath"));
+		Route route = getRouteMatching(routes, "/en_US/prefix/withoutPath");
+		assertTrue(route.canHandle("/en_US/prefix/withoutPath"));
 	}
 	
 	@Test
@@ -102,8 +115,8 @@ public class I18nRoutesParserTest {
 	@Test
 	public void shouldAddLocalePrefixAnnotatedControllerMethodAnnotated() {
 		List<Route> routes = parser.rulesFor(new DefaultBeanClass(AnnotatedController.class));
-		Route route = getRouteMatching(routes, "/prefix/absolutePath");
-		assertTrue(route.canHandle("/pt_BR/prefix/absolutePath"));
+		Route route = getRouteMatching(routes, "/en_US/prefix/absolutePath");
+		assertTrue(route.canHandle("/en_US/prefix/absolutePath"));
 	}
 	
 	@Test
@@ -116,8 +129,8 @@ public class I18nRoutesParserTest {
 	@Test
 	public void shouldAddLocalePrefixConventionControllerMethodWithoutPath() {
 		List<Route> routes = parser.rulesFor(new DefaultBeanClass(ConventionController.class));
-		Route route = getRouteMatching(routes, "/convention/withoutPath");
-		assertTrue(route.canHandle("/pt_BR/convention/withoutPath"));
+		Route route = getRouteMatching(routes, "/en_US/convention/withoutPath");
+		assertTrue(route.canHandle("/en_US/convention/withoutPath"));
 	}
 	
 	@Test
@@ -130,8 +143,41 @@ public class I18nRoutesParserTest {
 	@Test
 	public void shouldAddLocalePrefixConventionControllerMethodAnnotated() {
 		List<Route> routes = parser.rulesFor(new DefaultBeanClass(ConventionController.class));
-		Route route = getRouteMatching(routes, "/absolutePath");
-		assertTrue(route.canHandle("/pt_BR/absolutePath"));
+		Route route = getRouteMatching(routes, "/en_us/absolutePath");
+		assertTrue(route.canHandle("/en_us/absolutePath"));
+	}
+	
+	@Test
+	public void shouldTranslateRouteToPtBrAnnotatedControllerMethodWithoutPath() {
+		List<Route> routes = parser.rulesFor(new DefaultBeanClass(AnnotatedController.class));
+		Route route = getRouteMatching(routes, "/pt_BR/prefixo/semPath");
+		assertNotNull(route);
+		assertTrue(route.canHandle("/pt-br/prefixo/semPath"));
+		assertFalse(route.canHandle("/en-br/prefixo/semPath"));
+	}
+	
+	@Test
+	public void shouldTranslateRouteToPtBrAnnotatedControllerMethodPath() {
+		List<Route> routes = parser.rulesFor(new DefaultBeanClass(AnnotatedController.class));
+		Route route = getRouteMatching(routes, "/pt_BR/prefixo/absoluto");
+		assertNotNull(route);
+		assertTrue(route.canHandle("/pt_BR/prefixo/absoluto"));
+	}
+	
+	@Test
+	public void shouldTranslateRouteToPtBrConventionControllerMethodWithoutPath() {
+		List<Route> routes = parser.rulesFor(new DefaultBeanClass(ConventionController.class));
+		Route route = getRouteMatching(routes, "/pt_BR/convencao/semPath");
+		assertNotNull(route);
+		assertTrue(route.canHandle("/pt_BR/convencao/semPath"));
+	}
+	
+	@Test
+	public void shouldTranslateRouteToPtBrConventionControllerMethodPath() {
+		List<Route> routes = parser.rulesFor(new DefaultBeanClass(ConventionController.class));
+		Route route = getRouteMatching(routes, "/pt_BR/absoluto");
+		assertNotNull(route);
+		assertTrue(route.canHandle("/pt_BR/absoluto"));
 	}
 	
 	private Route getRouteMatching(List<Route> routes, String uri) {
