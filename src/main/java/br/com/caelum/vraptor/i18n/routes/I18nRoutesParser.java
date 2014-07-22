@@ -25,7 +25,7 @@ public class I18nRoutesParser extends PathAnnotationRoutesParser {
 
 	private final List<Route> routes;
 	private final RoutesResources routesResource;
-	private Router router;
+	private final Router router;
 	
 	/** 
 	 * @deprecated CDI eyes only
