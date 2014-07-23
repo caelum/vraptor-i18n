@@ -138,7 +138,38 @@ Se sua página de erro está dentro de qualquer subdiretório de /WEB-INF/, ela 
 
 # Alterando o locale padrão
 
-Para que o plugin mude o idioma configurado para a sessão do usuário, basta adicionar no request o parâmetro _locale. Por exemplo, http://seudominio.com/seupath?_locale=pt_BR configurará o locale para Português do Brasil. O parâmetro pode ser enviado via POST também.
+Para que o plugin mude o idioma configurado para a sessão do usuário, basta adicionar no request o parâmetro <code>_locale</code>. Por exemplo, <code>http://seudominio.com/seupath?_locale=pt_BR</code> configurará o locale para Português do Brasil. O parâmetro pode ser enviado via POST também.
+
+# URL com locale
+
+Além das URIs padrão do VRaptor o plugin aceita URIs com o locale no início, por exemplo: 
+```
+/controller/action
+/en-us/controller/action
+``` 
+
+# Tradução de rotas
+
+As rotas podem ser traduzidas adicionando um arquivo de propriedades para o locale com o nome <code>routes_{locale}.properties</code>.
+Para traduzir adicione as rotas com suas traduções no arquivo no formato chave/valor.
+
+Exemplo de tradução para português brasileiro do locale padrão em inglês:
+
+*Conteúdo do arquivo <code>routes_pt_BR.properties</code>*:
+
+```
+/controller/action/{param} = /controlador/acao/{param}
+```
+
+*Rotas que respondem a este controller/action*:
+
+```
+/controller/action/{param}
+/en-us/controller/action/{param}
+/pt-br/controlador/acao/{param}
+``` 
+
+Nota: Ter URLs diferentes para o mesmo conteúdo pode trazer efeitos negativos para SEO, então traduza apenas URLs que também possuam o conteúdo traduzido.
 
 # Release
 
