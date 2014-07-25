@@ -10,7 +10,7 @@ Uma biblioteca simples, compatível com o jstl fmt:message para i18n nas views.
 		<dependency>
 			<groupId>br.com.caelum.vraptor</groupId>
 			<artifactId>vraptor-i18n</artifactId>
-			<version>1.0.0</version>
+			<version>4.0.1</version> <!-- or latest version -->
 			<scope>compile</scope>
 		</dependency>
 
