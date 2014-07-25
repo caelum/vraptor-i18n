@@ -121,7 +121,7 @@ Similarmente você pode usar padrões do DecimalFormat:
 	
 E dar nomes a seus padrões:
 
-	${l[meuNumero].pattern("percentage")}
+	${l[meuNumero].custom("percentage")}
 	
 Colocando então no messages.properties:
 
