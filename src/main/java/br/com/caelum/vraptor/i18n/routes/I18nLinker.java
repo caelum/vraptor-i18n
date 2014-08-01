@@ -45,17 +45,22 @@ public class I18nLinker extends Linker {
 		
 		ImmutableList<Route> routes = FluentIterable.from(router.allRoutes()).filter(canHandle(controller, method)).toList();
 		for (Route route : routes) {
-			Locale locale = localization.getLocale();
-			String prefix = "/" + locale.getLanguage();
-			if(!locale.getCountry().isEmpty()) {
-				prefix += "-" + locale.getCountry().toLowerCase();
-			}
+			String prefix = getLocalizedPrefix();
 			if(route.getOriginalUri().startsWith(prefix)) {
 				return context.getContextPath() + route.urlFor(controller, method, getArgs(method));
 			}
 		}
 		
 		return super.getLink();
+	}
+
+	private String getLocalizedPrefix() {
+		Locale locale = localization.getLocale();
+		String prefix = "/" + locale.getLanguage();
+		if(!locale.getCountry().isEmpty()) {
+			prefix += "-" + locale.getCountry().toLowerCase();
+		}
+		return prefix;
 	}
 
 	private Method getMethod() {
