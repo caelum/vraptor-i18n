@@ -35,6 +35,8 @@ public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 
 	@Override
 	public LocalizedInfo get(Object key) {
+		if (key == null)
+			return new NullSafeLocalized();
 		if (key instanceof Calendar) {
 			Date date = ((Calendar) key).getTime();
 			return new LocalizedData(date, bundle, locale);
