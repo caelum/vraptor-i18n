@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.enterprise.inject.Vetoed;
+
+@Vetoed
 public class LocalizedData implements LocalizedInfo {
 
 	private DateFormat formatter;

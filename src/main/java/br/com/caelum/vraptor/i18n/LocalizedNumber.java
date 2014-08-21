@@ -6,6 +6,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.enterprise.inject.Vetoed;
+
+@Vetoed
 public class LocalizedNumber implements LocalizedInfo {
 
 	private final Number key;
