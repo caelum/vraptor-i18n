@@ -1,8 +1,8 @@
 package br.com.caelum.vraptor.i18n;
 
-import javax.enterprise.inject.Vetoed;
+import javax.enterprise.context.ApplicationScoped;
 
-@Vetoed
+@ApplicationScoped
 public class NullSafeLocalized implements LocalizedInfo {
 
 	@Override

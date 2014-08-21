@@ -19,24 +19,27 @@ public class LocalizedFormatter extends ForwardingMap<Class<?>, Object> {
 
 	private final ResourceBundle bundle;
 	private final Locale locale;
+	private final NullSafeLocalized nullSafeLocalized;
 
 	/**
 	 * @deprecated CDI eyes only
 	 */
 	public LocalizedFormatter() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	@Inject
-	public LocalizedFormatter(ResourceBundle bundle, Locale locale) {
+	public LocalizedFormatter(ResourceBundle bundle, Locale locale,
+			NullSafeLocalized nullSafeLocalized) {
 		this.bundle = bundle;
 		this.locale = locale;
+		this.nullSafeLocalized = nullSafeLocalized;
 	}
 
 	@Override
 	public LocalizedInfo get(Object key) {
 		if (key == null)
-			return new NullSafeLocalized();
+			return this.nullSafeLocalized;
 		if (key instanceof Calendar) {
 			Date date = ((Calendar) key).getTime();
 			return new LocalizedData(date, bundle, locale);

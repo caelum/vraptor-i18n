@@ -32,7 +32,7 @@ public class LocalizedFormatterTest {
 		data = joda.toDate();
 		cal = joda.toGregorianCalendar();
 		formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, bundle.getLocale());
-		locator = new LocalizedFormatter(bundle, bundle.getLocale());
+		locator = new LocalizedFormatter(bundle, bundle.getLocale(), new NullSafeLocalized());
 	}
 
 	@Test
