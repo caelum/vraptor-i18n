@@ -32,7 +32,7 @@ public class LocalizedFormatterTest {
 		data = joda.toDate();
 		cal = joda.toGregorianCalendar();
 		formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, bundle.getLocale());
-		locator = new LocalizedFormatter(bundle, bundle.getLocale());
+		locator = new LocalizedFormatter(bundle, bundle.getLocale(), new NullSafeLocalized());
 	}
 
 	@Test
@@ -93,5 +93,10 @@ public class LocalizedFormatterTest {
 
 		formatter = new SimpleDateFormat(message);
 		assertEquals(formatter.format(data), locator.get(data).custom("pirate").toString());
+	}
+	
+	@Test
+	public void should_return_empty_string_instead_NPE_when_receive_null_parameter() {
+		assertEquals("", locator.get(null).custom("any_thing").toString());
 	}
 }
