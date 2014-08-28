@@ -4,6 +4,9 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import javax.enterprise.inject.Vetoed;
+
+@Vetoed
 public class Message {
 
 	private static final String[] ZERO = { "0" };
