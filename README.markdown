@@ -148,6 +148,14 @@ Além das URIs padrão do VRaptor o plugin aceita URIs com o locale no início, 
 /en-us/controller/action
 ``` 
 
+Para ativar essa feature, você precisa habilitar a classe `br.com.caelum.vraptor.i18n.I18nLocalization` no seu beans.xml adicionando-a à sua lista de alternatives:
+
+```xml
+<alternatives>
+	<class>br.com.caelum.vraptor.i18n.I18nLocalization</class>
+</alternatives>
+```
+
 # Tradução de rotas
 
 As rotas podem ser traduzidas adicionando um arquivo de propriedades para o locale com o nome <code>routes_{locale}.properties</code>.
@@ -169,7 +177,16 @@ Exemplo de tradução para português brasileiro do locale padrão em inglês:
 /pt-br/controlador/acao/{param}
 ``` 
 
-Nota: Ter URLs diferentes para o mesmo conteúdo pode trazer efeitos negativos para SEO, então traduza apenas URLs que também possuam o conteúdo traduzido.
+Nota: Ter URLs diferentes para o mesmo conteúdo pode trazer efeitos negativos para SEO, então traduza apenas URLs que também 
+possuam o conteúdo traduzido.
+
+Para ativar essa feature, você precisa habilitar a classe `br.com.caelum.vraptor.i18n.routes.I18nRoutesParser` adicionando-a à sua lista de alternatives:
+
+```xml
+<alternatives>
+	<class>br.com.caelum.vraptor.i18n.routes.I18nRoutesParser</class>
+</alternatives>
+```
 
 # Release
 
