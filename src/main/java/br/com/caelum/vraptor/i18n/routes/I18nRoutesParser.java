@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Specializes;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Path;
@@ -20,7 +20,8 @@ import br.com.caelum.vraptor.http.route.Route;
 import br.com.caelum.vraptor.http.route.RouteBuilder;
 import br.com.caelum.vraptor.http.route.Router;
 
-@ApplicationScoped @Specializes
+@ApplicationScoped
+@Alternative
 public class I18nRoutesParser extends PathAnnotationRoutesParser {
 
 	private final List<Route> routes;

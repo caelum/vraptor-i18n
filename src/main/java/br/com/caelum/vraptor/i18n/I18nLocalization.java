@@ -4,8 +4,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.jstl.core.Config;
@@ -16,7 +16,8 @@ import br.com.caelum.vraptor.core.JstlLocalization;
  * ResourceBundle producer to locale configuration 
  * @author Denilson Telaroli
  */
-@RequestScoped @Specializes
+@RequestScoped
+@Alternative
 public class I18nLocalization extends JstlLocalization {
 
 	private final HttpServletRequest request;
