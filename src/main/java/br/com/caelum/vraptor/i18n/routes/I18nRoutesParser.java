@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
+import javax.interceptor.Interceptor;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.controller.BeanClass;
@@ -22,6 +24,7 @@ import br.com.caelum.vraptor.http.route.Router;
 
 @ApplicationScoped
 @Alternative
+@Priority(Interceptor.Priority.LIBRARY_BEFORE)
 public class I18nRoutesParser extends PathAnnotationRoutesParser {
 
 	private final List<Route> routes;
