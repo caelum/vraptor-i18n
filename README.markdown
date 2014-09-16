@@ -169,7 +169,8 @@ Exemplo de tradução para português brasileiro do locale padrão em inglês:
 /pt-br/controlador/acao/{param}
 ``` 
 
-Nota: Ter URLs diferentes para o mesmo conteúdo pode trazer efeitos negativos para SEO, então traduza apenas URLs que também possuam o conteúdo traduzido.
+Nota: Ter URLs diferentes para o mesmo conteúdo pode trazer efeitos negativos para SEO, então traduza apenas URLs que também 
+possuam o conteúdo traduzido.
 
 # Release
 
