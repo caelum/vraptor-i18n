@@ -72,10 +72,10 @@ public class I18nRoutesParser extends PathAnnotationRoutesParser {
 	}
 	
 	private Route buildWithLocalePrefix(Method javaMethod, Class<?> type, String uri, Locale locale) {
-		String localePrefix = "(?i)/" + locale.getLanguage();
+		String localePrefix = "/" + locale.getLanguage();
 		
 		if(!locale.getCountry().isEmpty()) {
-			 localePrefix += "[\\-|_]" + locale.getCountry();
+			 localePrefix += "-" + locale.getCountry().toLowerCase();
 		}
 		
 		RouteBuilder rule = router.builderFor(localePrefix + uri);
