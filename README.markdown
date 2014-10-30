@@ -73,7 +73,7 @@ O campo nome deve ser preenchido para todo Usuário novo.
 
 As duas regex a seguir ajudam a transformar seus jsps e tagfiles em uma batida só:
 
-```jsp
+```
 <fmt:message key="([^"]+)"/> ==> ${t['$1']}
 <fmt:message key="([^"]+)"></fmt:message> ==> ${t['$1']}
 ```
