@@ -42,15 +42,15 @@ public class Message {
 		int pos = args.length;
 		this.args = Arrays.copyOf(this.args, this.args.length
 				+ parameters.length);
-		for (int i = 0; i < parameters.length; i++) {
-			this.args[pos++] = parameters[i];
+		for (String parameter : parameters) {
+			this.args[pos++] = parameter;
 		}
 		return this;
 	}
 
 	private String getValue() {
-		String message = bundle.getString(key.toString());
-		if (message.equals("???" + key.toString() + "???")) {
+		String message = bundle.getString(key);
+		if (message.equals("???" + key + "???")) {
 			return "<span class='i18n_missing_key'>" + key + "</span>";
 		}
 		if (this.args == null) {
