@@ -91,7 +91,7 @@ public class LocalizedFormatterTest {
 		String message = "yyyy.MM.dd G 'at' HH:mm:ss z";
 		bundle.addWord("formats.time.pirate", message);
 
-		formatter = new SimpleDateFormat(message);
+		formatter = new SimpleDateFormat(message, Locale.US);
 		assertEquals(formatter.format(data), locator.get(data).custom("pirate").toString());
 	}
 	
