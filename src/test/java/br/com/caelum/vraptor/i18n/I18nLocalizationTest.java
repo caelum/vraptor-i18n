@@ -76,15 +76,19 @@ public class I18nLocalizationTest {
 	private void setLocaleEn() {
 		session.setAttribute(Config.FMT_LOCALE + ".session", new Locale("en"));
 	}
-	
+
+	private void setLocalePt_BR() {
+		session.setAttribute(Config.FMT_LOCALE + ".session", new Locale("pt_BR"));
+	}
+
 	@Test
 	public void shouldNotSetLocaleFromParameterIfNull() {
 		when(request.getParameter("_locale")).thenReturn(null);
 		assertDefaultLocale();
 		setLocaleEn();
 		
-		i18n.getBundle();
 		Locale locale = getLocale();
+		i18n.getBundle(locale);
 		assertNotNull(locale);
 		assertEquals("en", locale.getLanguage());
 	}
@@ -95,11 +99,12 @@ public class I18nLocalizationTest {
 		assertDefaultLocale();
 		setLocaleEn();
 		assertEquals(getLocale().getLanguage(), "en");
-		
-		i18n.getBundle();
+
+		setLocalePt_BR();
 		Locale locale = getLocale();
+		i18n.getBundle(locale);
 		assertNotNull(locale);
-		assertEquals("pt", locale.getLanguage());
+		assertEquals("pt_br", locale.getLanguage());
 	}
 	
 	private Locale getLocale() {

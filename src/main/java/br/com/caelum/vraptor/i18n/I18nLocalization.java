@@ -40,9 +40,9 @@ public class I18nLocalization extends JstlLocalization {
 	
 	@Override
 	@Produces
-	public ResourceBundle getBundle() {
+	public ResourceBundle getBundle(Locale locale) {
 		setLocaleFromRequestParameter();
-		return super.getBundle();
+		return super.getBundle(locale);
 	}
 	
 	@Override
