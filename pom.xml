@@ -5,7 +5,6 @@
 	<artifactId>vraptor-i18n</artifactId>
 	<version>4.2.0-RC3</version>
 	<packaging>jar</packaging>
-
 	<name>vraptor-i18n</name>
 	<url>http://maven.apache.org</url>
 
