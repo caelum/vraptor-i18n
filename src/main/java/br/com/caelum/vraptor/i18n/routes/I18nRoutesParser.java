@@ -40,7 +40,6 @@ public class I18nRoutesParser extends PathAnnotationRoutesParser {
 
 	@Inject
 	public I18nRoutesParser(Router router, RoutesResources routesResource) {
-		super(router);
 		this.router = router;
 		this.routesResource = routesResource;
 		routes = new ArrayList<>();
