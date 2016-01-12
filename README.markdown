@@ -22,7 +22,7 @@ Para testar a versão beta adicione o repositório do JitPack.io no seu **pom.xm
 		<dependency>
 			<groupId>com.github.gpassero</groupId>
 			<artifactId>vraptor-i18n</artifactId>
-			<version>0bd6f0836d</version>
+			<version>420c75e93b</version>
 		</dependency>	
 	</dependencies>	
 ```	
