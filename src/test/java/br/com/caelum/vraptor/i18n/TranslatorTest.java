@@ -38,7 +38,8 @@ public class TranslatorTest {
 	public void should_return_interpolated_string() {
 		String message = "Field {0} must be not empty for component {1}";
 		bundle.addWord("must_be_not_empty", message);
-		assertEquals("Field name must be not empty for component User", map.get("must_be_not_empty").args("name", "User").toString());
+		assertEquals("Field name must be not empty for component User",
+				map.get("must_be_not_empty").args("name", "User").toString());
 	}
 	
 	@Test(expected = UnsupportedOperationException.class)

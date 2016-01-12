@@ -36,7 +36,7 @@ public class MessageTest {
 	@Test
 	public void should_accept_params_after_count() {
 		bundle.addWord("messages_found.other", "{0} messages found for user {1}");
-		String five = new Message(bundle ,"messages_found").count(5).args("Guilherme").toString();
+		String five = new Message(bundle, "messages_found").count(5).args("Guilherme").toString();
 		assertEquals("5 messages found for user Guilherme", five);
 	}
 
