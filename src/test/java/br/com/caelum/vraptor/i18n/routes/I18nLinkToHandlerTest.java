@@ -10,16 +10,16 @@ import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
-import net.vidageek.mirror.dsl.Mirror;
-import net.vidageek.mirror.exception.MirrorException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.caelum.vraptor.controller.DefaultBeanClass;
+import br.com.caelum.vraptor.core.DefaultReflectionProvider;
 import br.com.caelum.vraptor.core.JstlLocalization;
+import br.com.caelum.vraptor.core.ReflectionProvider;
+import br.com.caelum.vraptor.core.ReflectionProviderException;
 import br.com.caelum.vraptor.http.route.Route;
 import br.com.caelum.vraptor.http.route.Router;
 import br.com.caelum.vraptor.proxy.JavassistProxifier;
@@ -35,13 +35,14 @@ public class I18nLinkToHandlerTest {
 	private @Mock Route en;
 	private @Mock Route pt;
 	private @Mock Route route;
+	private ReflectionProvider reflectionProvider;
 	private String a;
 	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		
-		method = new Mirror().on(TestController.class).reflect().method("method").withArgs(String.class);
+		reflectionProvider = new DefaultReflectionProvider();
+		method = reflectionProvider.getMethod(TestController.class, "method", String.class);
 		
 		a = "test";
 		when(route.getOriginalUri()).thenReturn("/expectedURL");
@@ -59,7 +60,7 @@ public class I18nLinkToHandlerTest {
 		when(router.urlFor(TestController.class, method, a)).thenReturn("/expectedURL");
 		when(context.getContextPath()).thenReturn("/path");
 		
-		handler = new I18nLinkToHandler(context, router, new JavassistProxifier(), localization);
+		handler = new I18nLinkToHandler(context, router, new JavassistProxifier(), localization, reflectionProvider);
 	}
 
 	@Test
@@ -101,8 +102,7 @@ public class I18nLinkToHandlerTest {
 		try {
 			Method method = null;
 			for (int length = types.length; length >= 0; length--) {
-				method = new Mirror().on(obj.getClass()).reflect().method(methodName)
-					.withArgs(Arrays.copyOf(types, length));
+				method = reflectionProvider.getMethod(obj.getClass(), methodName, Arrays.copyOf(types, length));
 				if (method != null) 
 					break;
 			}
@@ -110,8 +110,8 @@ public class I18nLinkToHandlerTest {
 			if (methodName.startsWith("get")) {
 				return method.invoke(obj).toString();
 			}
-			return new Mirror().on(obj).invoke().method(method).withArgs(args).toString();
-		} catch (MirrorException | InvocationTargetException e) {
+			return reflectionProvider.invoke(obj, method, args).toString();
+		} catch (ReflectionProviderException | InvocationTargetException e) {
 			throw e.getCause() == null? e : e.getCause();
 		}
 	}
