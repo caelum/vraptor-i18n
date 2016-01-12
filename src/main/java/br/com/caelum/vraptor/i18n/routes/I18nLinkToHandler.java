@@ -36,6 +36,7 @@ public class I18nLinkToHandler extends LinkToHandler {
 		this.context = context;
 		this.router = router;
 		this.localization = localization;
+		this.reflectionProvider = reflectionProvider;
 	}
 	
 	@Override
