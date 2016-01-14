@@ -34,7 +34,7 @@ public class Message {
 		return this;
 	}
 
-	public Message args(String[] parameters) {
+	public Message args(String... parameters) {
 		if (this.args == null) {
 			this.args = parameters;
 			return this;
@@ -46,64 +46,6 @@ public class Message {
 			this.args[pos++] = parameter;
 		}
 		return this;
-	}
-
-	public Message args(String parameter) {
-		String[] parameters = { parameter };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2) {
-		String[] parameters = { parameter1, parameter2 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3) {
-		String[] parameters = { parameter1, parameter2, parameter3 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4, parameter5 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5,
-			String parameter6) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5,
-			String parameter6, String parameter7) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5,
-			String parameter6, String parameter7, String parameter8) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7,
-				parameter8 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5,
-			String parameter6, String parameter7, String parameter8, String parameter9) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7,
-				parameter8, parameter9 };
-		return this.args(parameters);
-	}
-
-	public Message args(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5,
-			String parameter6, String parameter7, String parameter8, String parameter9, String parameter10) {
-		String[] parameters = { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7,
-				parameter8, parameter9, parameter10 };
-		return this.args(parameters);
 	}
 
 	private String getValue() {
