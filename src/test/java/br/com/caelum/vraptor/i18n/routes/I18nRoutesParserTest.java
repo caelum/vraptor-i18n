@@ -22,6 +22,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.controller.DefaultBeanClass;
 import br.com.caelum.vraptor.core.Converters;
+import br.com.caelum.vraptor.core.ReflectionProvider;
 import br.com.caelum.vraptor.http.EncodingHandler;
 import br.com.caelum.vraptor.http.ParameterNameProvider;
 import br.com.caelum.vraptor.http.ParanamerNameProvider;
@@ -46,6 +47,7 @@ public class I18nRoutesParserTest {
 	private @Mock RoutesResources routesResource;
 	private List<ResourceBundle> bundles;
 	private @Mock ResourceBundle bundle;
+	private @Mock ReflectionProvider reflectionProvider;
 
 	@Before
 	public void setup() {
@@ -59,14 +61,15 @@ public class I18nRoutesParserTest {
 
 			@Override
 			public DefaultRouteBuilder answer(InvocationOnMock invocation) throws Throwable {
-				return new DefaultRouteBuilder(proxifier, typeFinder, converters, nameProvider, new JavaEvaluator(), (String) invocation.getArguments()[0],encodingHandler);
+				return new DefaultRouteBuilder(proxifier, typeFinder, converters, nameProvider,
+						new JavaEvaluator(reflectionProvider), (String) invocation.getArguments()[0], encodingHandler);
 			}
 		});
 		
 		bundles = Arrays.asList(ResourceBundle.getBundle("routes", new Locale("pt", "BR")));
 		when(routesResource.getAvailableBundles()).thenReturn(bundles);
 
-		parser = new I18nRoutesParser(router, routesResource);
+		parser = new I18nRoutesParser(router, routesResource, reflectionProvider);
 		
 		Locale.setDefault(new Locale("en", "US"));
 	}
