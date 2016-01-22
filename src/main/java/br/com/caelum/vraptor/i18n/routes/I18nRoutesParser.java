@@ -17,6 +17,7 @@ import javax.interceptor.Interceptor;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.controller.BeanClass;
 import br.com.caelum.vraptor.controller.HttpMethod;
+import br.com.caelum.vraptor.core.ReflectionProvider;
 import br.com.caelum.vraptor.http.route.PathAnnotationRoutesParser;
 import br.com.caelum.vraptor.http.route.Route;
 import br.com.caelum.vraptor.http.route.RouteBuilder;
@@ -35,12 +36,12 @@ public class I18nRoutesParser extends PathAnnotationRoutesParser {
 	 * @deprecated CDI eyes only
 	 */
 	protected I18nRoutesParser() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	@Inject
-	public I18nRoutesParser(Router router, RoutesResources routesResource) {
-		super(router);
+	public I18nRoutesParser(Router router, RoutesResources routesResource, ReflectionProvider reflectionProvider) {
+		super(router, reflectionProvider);
 		this.router = router;
 		this.routesResource = routesResource;
 		routes = new ArrayList<>();
