@@ -8,6 +8,7 @@ import javax.enterprise.inject.Vetoed;
 import javax.servlet.ServletContext;
 
 import br.com.caelum.vraptor.core.JstlLocalization;
+import br.com.caelum.vraptor.core.ReflectionProvider;
 import br.com.caelum.vraptor.http.route.Route;
 import br.com.caelum.vraptor.http.route.Router;
 import br.com.caelum.vraptor.view.Linker;
@@ -23,9 +24,9 @@ public class I18nLinker extends Linker {
 	private final Router router;
 	private final Class<?> controller;
 	
-	public I18nLinker(ServletContext context, Router router,
-			Class<?> controller, String methodName, List<Object> args, JstlLocalization localization) {
-		super(context, router, controller, methodName, args);
+	public I18nLinker(ServletContext context, Router router, Class<?> controller, String methodName, List<Object> args,
+			JstlLocalization localization, ReflectionProvider reflectionProvider) {
+		super(context, router, controller, methodName, args, reflectionProvider);
 		this.router = router;
 		this.controller = controller;
 		this.localization = localization;
